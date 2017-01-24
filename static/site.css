@@ -34,3 +34,7 @@ header, main, footer {
     overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
 }
+
+.userView {
+    background-image: url('/static/img/user-view_bg.png');
+}
