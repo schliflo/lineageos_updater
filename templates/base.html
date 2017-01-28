@@ -24,26 +24,30 @@
 </div>
                             <a href="#!user"><img class="logo circle" src="/static/logo.png" height=128px width=128px /></a>
                             <a href="#!name"><span class="white-text name">Devices</span></a>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="input-field col s12">
+                            <input type="text" placeholder="Device Filter" id="search" list="devices" autocomplete="off">
+                            <datalist id="devices">
+                                {% for device in devices %}
+                                <option value="{{device.oem}} {{device.name}} ({{device.model}})" />
+                                {% endfor %}
+                            </datalist>
                         </div>
                     </li>
                     {% for oem in oems %}
                     <li class="no-padding">
                         <ul class="collapsible collapsible-accordian">
-                            <li class="bold">
-                                {% if oem == active_oem %}
-                                <a class="collapsible-header waves-effect waves-teal bold active">{{oem}}</a>
-                                {% else %}
-                                <a class="collapsible-header waves-effect waves-teal bold">{{oem}}</a>
-                                {% endif %}
+                            <li class="bold" data-value="{% for device in devices %}{% if device.oem == oem %} {{device.oem}} {{device.name}} ({{device.model}}){% endif %}{% endfor %}">
+
+                                <a class="collapsible-header waves-effect waves-teal bold{% if oem == active_oem %} active{% endif %}">{{oem}}</a>
                                 <div class="collapsible-body">
                                     <ul>
                                         {% for device in devices %}
                                         {% if device.oem == oem %}
-                                        {% if device.model == active_device %}
-                                        <li class="active grey darken-2"><a href="/{{device.model}}">{{device.name}} ({{device.model}})</a></li>
-                                        {% else %}
-                                        <li ><a href="/{{device.model}}">{{device.name}} ({{device.model}})</a></li>
-                                        {% endif %}
+                                        <li class="{% if device.model == active_device %} active grey darken-2{% endif %}" data-value="{{device.oem}} {{device.name}} ({{device.model}})"><a href="/{{device.model}}">{{device.name}} ({{device.model}})</a></li>
                                         {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -77,9 +81,7 @@
         </footer>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-        <script type="text/javascript">
-            $(".button-collapse").sideNav();
-        </script>
+        <script src="/static/script/main.js"/></script>
     </body>
 </html>
 
